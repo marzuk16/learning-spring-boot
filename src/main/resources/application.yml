@@ -10,7 +10,7 @@ server:
 # spring config
 spring:
   jackson:
-    # This is responsible for convert java class to json & vice versa.
+    # This is responsible for convert java data class to json & vice versa.
     #This is by default available of spring boot project.
     date-format: yyyy-MM-dd
   application:
