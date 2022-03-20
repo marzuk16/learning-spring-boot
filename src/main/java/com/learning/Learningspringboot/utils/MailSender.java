@@ -71,7 +71,6 @@ public class MailSender {
         });
         session.setDebug(true); // to debug session
 
-
         // step 2: compose the message [text, attachments]
         mimeMessage = new MimeMessage(session);
 
