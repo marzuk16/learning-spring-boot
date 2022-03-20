@@ -7,12 +7,11 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 
 public class MailSender {
 
-    public static void send(String message, String subject, List<String> to, String from, String password) {
+    public static void send(String message, String subject, String[] to, String from, String password) {
 
         // variable for gmail
         String host = "smtp.gmail.com";
@@ -48,8 +47,8 @@ public class MailSender {
             mimeMessage.setFrom(from);
 
             // configure to addresses
-            Address[] addresses = new Address[to.size()];
-            for (int i = 0; i < to.size(); i++) addresses[i] = new InternetAddress(to.get(i));
+            Address[] addresses = new Address[to.length];
+            for (int i = 0; i < to.length; i++) addresses[i] = new InternetAddress(to[i]);
             mimeMessage.addRecipients(Message.RecipientType.TO, addresses);
 
             // adding subject to message
@@ -67,7 +66,7 @@ public class MailSender {
         }
     }
 
-    public static void send(String message, String subject, List<String> to, String from, String password, String path){
+    public static void send(String message, String subject, String[] to, String from, String password, String path) {
         // variable for gmail
         String host = "smtp.gmail.com";
         String port = "465"; // gmail port
@@ -102,8 +101,8 @@ public class MailSender {
             mimeMessage.setFrom(from);
 
             // configure to addresses
-            Address[] addresses = new Address[to.size()];
-            for (int i = 0; i < to.size(); i++) addresses[i] = new InternetAddress(to.get(i));
+            Address[] addresses = new Address[to.length];
+            for (int i = 0; i < to.length; i++) addresses[i] = new InternetAddress(to[i]);
             mimeMessage.addRecipients(Message.RecipientType.TO, addresses);
 
             // adding subject to message
