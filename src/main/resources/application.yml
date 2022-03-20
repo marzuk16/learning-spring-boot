@@ -1,11 +1,4 @@
-# server config
-server:
-  port: 8000
-  error:
-    include-stacktrace: always
-  compression:
-    enabled: true
-  address: 0.0.0.0
+# For common environments, these configuration applicable for all environments.
 
 # spring config
 spring:
@@ -22,3 +15,5 @@ spring:
       initialize-schema: always
   main:
       allow-bean-definition-overriding: true
+  profiles: # Environments configuration
+    active: marzuk
