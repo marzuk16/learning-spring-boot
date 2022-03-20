@@ -24,17 +24,16 @@ public class TestResource {
     @ApiOperation(value = "get mapping", response = String.class)
     public ResponseEntity<JSONObject> get(
             @RequestParam(value = "message", defaultValue = "") String message,
-            @RequestParam(value = "subject", defaultValue = "") String subject) {
+            @RequestParam(value = "subject", defaultValue = "") String subject,
+            @RequestParam(value = "to", defaultValue = "") String to,
+            @RequestParam(value = "from", defaultValue = "") String from,
+            @RequestParam(value = "password", defaultValue = "") String password
+            ) {
 
-
-        List<String> to = new ArrayList<>();
-        to.add("marzuk777@gmail.com");
-        to.add("marzuk.dev@gmail.com");
-        to.add("marzuk@eatlbd.com");
 
         String path = "/home/marzuk/testFileZilla.txt";
-//        MailSender.send(message, subject, to, "200.successful@gmail.com", "M4rzuk!6");
-        MailSender.send(message, subject, to, "200.successful@gmail.com", "M4rzuk!6", path);
+//        MailSender.send(message, subject, to, to.split(","), password);
+        MailSender.send(message, subject, to.split(","), from, password, path);
         return ok(success(null).getJson());
     }
 }
