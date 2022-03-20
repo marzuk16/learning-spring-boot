@@ -40,6 +40,14 @@ dependencies {
     // for spring bean dependency
     implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.15'
 
+    // for e-mail sending
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+
+    // for json
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "com.googlecode.json-simple:json-simple:1.1.1"
+
+
 
 }
 
