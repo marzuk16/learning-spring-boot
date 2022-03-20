@@ -16,4 +16,4 @@ spring:
   main:
       allow-bean-definition-overriding: true
   profiles: # Environments configuration
-    active: marzuk
+    active: dev
