@@ -12,9 +12,9 @@ server:
 spring:
   # Database Configuration
   datasource:
-    url: jdbc:sqlserver://192.168.1.20:1433;databaseName=IEIMS_DEV_IWP_ONGOING
-    username: ieims_dev
-    password: Ie!mSd(v21
+    url: 
+    username: 
+    password: 
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   # JPA Configuration
