@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,11 +16,13 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/test")
-@Api(tags = "test data")
-public class TestResource {
+@RequestMapping("api/v1/mail-sender")
+@Api(tags = "mail sender data")
+public class MailSenderResource {
 
-    @GetMapping("/text")
+    private final MailSender mailSender;
+
+    @PostMapping("/text")
     @ApiOperation(value = "get mapping", response = String.class)
     public ResponseEntity<JSONObject> sendText(
             @RequestParam(value = "message", defaultValue = "") String message,
@@ -30,11 +32,11 @@ public class TestResource {
             @RequestParam(value = "password", defaultValue = "") String password
     ) {
 
-        MailSender.send(message, subject, to.split(","), from, password, "");
+        mailSender.send(message, subject, to.split(","), from, password);
         return ok(success(null).getJson());
     }
 
-    @GetMapping("/text-attachment")
+    @PostMapping("/text-with-attachment")
     @ApiOperation(value = "get mapping", response = String.class)
     public ResponseEntity<JSONObject> sendMail(
             @RequestParam(value = "message", defaultValue = "") String message,
@@ -46,7 +48,7 @@ public class TestResource {
 
 
         String path = "/home/marzuk/testFileZilla.txt";
-        MailSender.send(message, subject, to.split(","), from, password, path);
+        mailSender.sendWithAttachments(message, subject, to.split(","), from, password, path);
         return ok(success(null).getJson());
     }
 }
