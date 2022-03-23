@@ -12,7 +12,7 @@ server:
 spring:
   # Database Configuration
   datasource:
-    url: jdbc:sqlserver://sqlsrv\\sqlexpress;databaseName=LEARNING_SPRING_BOOT
+    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=LEARNING_SPRING_BOOT
     username: SA
     password: Root12!@
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
