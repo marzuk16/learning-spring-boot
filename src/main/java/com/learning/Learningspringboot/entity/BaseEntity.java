@@ -38,13 +38,13 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "RECORD_STATUS")
     private RecordStatus recordStatus;
 
-    @Type(type = "uuid-char")
+//    @Type(type = "uuid-char")
     @Column(name = "CREATOR", updatable = false)
-    private UUID createdBy;
+    private Long createdBy;
 
-    @Type(type = "uuid-char")
+//    @Type(type = "uuid-char")
     @Column(name = "UPDATOR")
-    private UUID updatedBy;
+    private Long updatedBy;
 
     @PrePersist
     public void prePersist() {
