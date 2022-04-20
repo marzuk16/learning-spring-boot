@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.googlecode.json-simple:json-simple:1.1.1"
 
-    implementation group: 'org.hibernate', name: 'hibernate-core', version: '6.0.0.Final', ext: 'pom'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.6'
 
 
 }
