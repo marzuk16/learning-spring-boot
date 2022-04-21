@@ -3,7 +3,6 @@ package com.learning.Learningspringboot.service;
 import com.learning.Learningspringboot.dto.PeopleDto;
 import com.learning.Learningspringboot.entity.People;
 import com.learning.Learningspringboot.enums.RecordStatus;
-import com.learning.Learningspringboot.listParameter.PeopleListParameter;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public interface PeopleService {
 
     People find(Long id);
 
-    List<People> getList(PeopleListParameter peopleListParameter);
+    List<People> getList(Integer page, Integer size, String sortBy, RecordStatus status);
 
-    List<People> getAll(String direction, String column);
+    List<People> getAll(String sortBy);
 }

@@ -6,30 +6,30 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-import static com.learning.Learningspringboot.constants.ValidatorConstants.NUMBER_FORMAT_EXCEPTION;
-import static com.learning.Learningspringboot.constants.ValidatorConstants.RESOURCE_NOT_FOUND;
+import static com.learning.Learningspringboot.constants.ValidatorConstants.*;
 
 
 @Slf4j
 @ControllerAdvice(basePackages = "com.iwp.service.resource")
 public class GlobalExceptionHandler {
 
-    //    @ExceptionHandler({Exception.class})
-    //    public ResponseEntity<JSONObject> handleGlobalExceptions(Exception ex, WebRequest request) {
-    //        log.error("Unknown exception.", ex);
-    //        if (ex instanceof InvalidFormatException) {
-    //            return new ResponseEntity<>(ResponseBuilder.error(ex.getMessage()).getJson(), HttpStatus.BAD_REQUEST);
-    //        }
-    //        if (ex instanceof HttpMessageNotReadableException) {
-    //            return new ResponseEntity<>(ResponseBuilder.error(ex.getMessage()).getJson(), HttpStatus.BAD_REQUEST);
-    //        }
-    //        return new ResponseEntity<>(ResponseBuilder.error((INTERNAL_SERVER_ERROR)).getJson(), HttpStatus.BAD_REQUEST);
-    //    }
+//        @ExceptionHandler({Exception.class})
+//        public ResponseEntity<JSONObject> handleGlobalExceptions(Exception ex, WebRequest request) {
+//            log.error("Unknown exception.", ex);
+//            if (ex instanceof InvalidFormatException) {
+//                return new ResponseEntity<>(ResponseBuilder.error(ex.getMessage()).getJson(), HttpStatus.BAD_REQUEST);
+//            }
+//            if (ex instanceof HttpMessageNotReadableException) {
+//                return new ResponseEntity<>(ResponseBuilder.error(ex.getMessage()).getJson(), HttpStatus.BAD_REQUEST);
+//            }
+//            return new ResponseEntity<>(ResponseBuilder.error((INTERNAL_SERVER_ERROR)).getJson(), HttpStatus.BAD_REQUEST);
+//        }
 
     @ExceptionHandler({ResourceNotFoundException.class})
     public ResponseEntity<JSONObject> handleNotFoundExceptions(Exception ex, WebRequest request) {

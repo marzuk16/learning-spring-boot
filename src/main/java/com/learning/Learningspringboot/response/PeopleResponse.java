@@ -12,7 +12,6 @@ public class PeopleResponse {
     private String name;
     private String email;
     private String phone;
-    private String password;
     private RecordStatus status;
     private Integer recordVersion;
 
@@ -22,7 +21,6 @@ public class PeopleResponse {
         response.setName(people.getName());
         response.setEmail(people.getEmail());
         response.setPhone(people.getPhone());
-        response.setPassword(people.getPassword());
         response.setStatus(people.getRecordStatus());
         response.setRecordVersion(people.getRecordVersion());
         return response;

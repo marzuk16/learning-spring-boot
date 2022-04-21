@@ -20,8 +20,11 @@ import java.util.stream.Collectors;
 import static com.learning.Learningspringboot.utils.response.ResponseBuilder.success;
 import static org.springframework.http.ResponseEntity.ok;
 
-@RestController @RequiredArgsConstructor @RequestMapping("api/v1/people")
-@Api(tags = "people's data") public class PeopleResource {
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("api/v1/people")
+@Api(tags = "people's data")
+public class PeopleResource {
 
     private final PeopleService service;
 
@@ -41,10 +44,10 @@ import static org.springframework.http.ResponseEntity.ok;
         return ok(success(PeopleResponse.from(people), "People update success!").getJson());
     }
 
-    @PutMapping("/change-record-status")
+    @PutMapping("/change-record-status/{id}/{status}")
     @ApiOperation(value = "update people record status", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> changeRecordStatus(@RequestParam(value = "id") Long id,
-            @RequestParam(value = "status") RecordStatus status) {
+    public ResponseEntity<JSONObject> changeRecordStatus(@PathVariable Long id,
+            @PathVariable RecordStatus status) {
 
         People people = service.changeRecordStatus(id, status);
 
@@ -53,7 +56,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
     @GetMapping("/find/{id}")
     @ApiOperation(value = "find people by id", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> findById(@RequestParam(value = "id") Long id) {
+    public ResponseEntity<JSONObject> findById(@PathVariable Long id) {
 
         People people = service.find(id);
 
@@ -62,22 +65,26 @@ import static org.springframework.http.ResponseEntity.ok;
 
     @GetMapping("/getList")
     @ApiOperation(value = "get people lists", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> getList(@RequestParam Long id) {
+    public ResponseEntity<JSONObject> getList(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @RequestParam(value = "sortBy", defaultValue = "") String sortBy,
+            @RequestParam(value = "recordStatus", defaultValue = "") RecordStatus status
+    ) {
 
-        PeopleListParameter parameter = new PeopleListParameter();
+        List<People> peoples = service.getList(page, size, sortBy, status);
+        List<PeopleResponse> responses =
+                peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
 
-        List<People> peoples = service.getList(parameter);
-        peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
-
-        return ok(success(peoples, "get list success!").getJson());
+        return ok(success(responses, "get list success!").getJson());
     }
 
     @GetMapping("/getAll") @ApiOperation(value = "get all people", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> getAll(@RequestParam(value = "direction") String direction,
-            @RequestParam(value = "sortBy") String column) {
+    public ResponseEntity<JSONObject> getAll(@RequestParam(value = "sortBy", defaultValue = "") String sortBy) {
 
-        List<People> peoples = service.getAll(direction, column);
-        List<PeopleResponse> responses = peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
+        List<People> peoples = service.getAll(sortBy);
+        List<PeopleResponse> responses =
+                peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
 
         return ok(success(responses, "all people get success").getJson());
     }
