@@ -5,6 +5,7 @@ import com.learning.Learningspringboot.entity.People;
 import com.learning.Learningspringboot.enums.RecordStatus;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PeopleService {
     People save(PeopleDto dto);
@@ -15,7 +16,7 @@ public interface PeopleService {
 
     People find(Long id);
 
-    List<People> getList(Integer page, Integer size, String sortBy, RecordStatus status);
+    Map<String, Object> getList(String[] sortable, String[] searchable, String sortBy, String search, Integer page, Integer size);
 
     List<People> getAll(String sortBy);
 }

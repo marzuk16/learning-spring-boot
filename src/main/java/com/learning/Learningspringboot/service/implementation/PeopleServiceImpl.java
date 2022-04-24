@@ -4,18 +4,22 @@ import com.learning.Learningspringboot.dto.PeopleDto;
 import com.learning.Learningspringboot.entity.People;
 import com.learning.Learningspringboot.enums.RecordStatus;
 import com.learning.Learningspringboot.exception.ResourceNotFoundException;
+import com.learning.Learningspringboot.helper.GetListHelper;
 import com.learning.Learningspringboot.helper.PeopleHelper;
 import com.learning.Learningspringboot.repository.PeopleRepository;
 import com.learning.Learningspringboot.service.PeopleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Map;
 
 import static com.learning.Learningspringboot.enums.RecordStatus.DRAFT;
 
 @Service @RequiredArgsConstructor public class PeopleServiceImpl implements PeopleService {
 
+    private final EntityManager em;
     private final PeopleHelper helper;
 
     private final PeopleRepository repository;
@@ -48,8 +52,9 @@ import static com.learning.Learningspringboot.enums.RecordStatus.DRAFT;
         return people;
     }
 
-    @Override public List<People> getList(Integer page, Integer size, String sortBy, RecordStatus status) {
-        List<People> peoples = repository.getList(page, size, sortBy, status);
+    @Override public Map<String, Object> getList(String[] sortable, String[] searchable, String sortBy, String search, Integer page, Integer size) {
+        GetListHelper<People> listHelper = new GetListHelper<>(em, People.class);
+        Map<String, Object> peoples = listHelper.getList(sortable, searchable, sortBy, search, page, size);
         return peoples;
     }
 
