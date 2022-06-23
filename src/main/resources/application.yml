@@ -1,0 +1,19 @@
+# For common environments, these configuration applicable for all environments.
+
+# spring config
+spring:
+  jackson:
+    # This is responsible for convert java class to json & vice versa.
+    #This is by default available of spring boot project.
+    date-format: yyyy-MM-dd
+  application:
+    name: learning-spring-boot
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: always
+  main:
+      allow-bean-definition-overriding: true
+  profiles: # Environments configuration
+    active: dev

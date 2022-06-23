@@ -1,0 +1,44 @@
+# For developments environments
+
+# server config
+server:
+  port: 8001
+  error:
+    include-stacktrace: always
+  compression:
+    enabled: true
+  address: 0.0.0.0
+
+spring:
+  # Database Configuration
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=LEARNING_SPRING_BOOT
+    username: SA
+    password: Root12!@
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  # JPA Configuration
+  jpa:
+    # Properties
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        show_sql: true
+        format_sql: true
+        use_sql: true
+        shutdown_on_session_factory_close: false
+        connection:
+          characterEncoding: utf-8
+          CharSet: utf-8
+          useUnicode: true
+          legacy_limit_handler: true
+
+    # Hibernate
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

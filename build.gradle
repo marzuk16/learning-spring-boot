@@ -1,0 +1,58 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.learning'
+version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = '17.0.2'
+sourceCompatibility = '11.0.14.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // for data dependency
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+
+
+    //Apache Commons Net library contains a collection of network utilities and protocol implementations.
+    // Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+    implementation 'commons-net:commons-net:3.6'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'commons-io:commons-io:2.11.0'
+
+    // for swagger dependency
+    implementation "io.springfox:springfox-boot-starter:3.0.0"
+//	implementation "org.springdoc:springdoc-openapi-ui:1.6.4"
+
+    // for lombok dependency
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // for spring bean dependency
+    implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.15'
+
+    // for e-mail sending
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+
+    // for json
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "com.googlecode.json-simple:json-simple:1.1.1"
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.6'
+
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
