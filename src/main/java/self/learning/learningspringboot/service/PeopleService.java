@@ -12,8 +12,6 @@ public interface PeopleService {
 
     People update(PeopleDto dto);
 
-    People changeRecordStatus(Long id, RecordStatus status);
-
     People find(Long id);
 
     List<People> getList(PeopleListParameter peopleListParameter);

@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import self.learning.learningspringboot.Routes;
 import self.learning.learningspringboot.dto.PeopleDto;
 import self.learning.learningspringboot.entity.People;
-import self.learning.learningspringboot.enums.RecordStatus;
 import self.learning.learningspringboot.listParameter.PeopleListParameter;
 import self.learning.learningspringboot.response.PeopleResponse;
 import self.learning.learningspringboot.service.PeopleService;
@@ -22,12 +22,21 @@ import static self.learning.learningspringboot.utils.response.ResponseBuilder.su
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/people")
+@RequestMapping(Routes.API_VERSION)
 @Api(tags = "people's data")
 public class PeopleResource {
     private final PeopleService service;
 
-    @PostMapping("/save") @ApiOperation(value = "save people", response = PeopleResponse.class)
+    @GetMapping(Routes.PEOPLE_BASE_ROUTE) @ApiOperation(value = "get all people", response = PeopleResponse.class)
+    public ResponseEntity<JSONObject> getAll(@RequestParam(value = "direction") String direction,
+            @RequestParam(value = "sortBy") String column) {
+
+        List<People> peoples = service.getAll(direction, column);
+        List<PeopleResponse> responses = peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
+
+        return ok(success(responses, "all people get success").getJson());
+    }
+    @PostMapping(Routes.PEOPLE_BASE_ROUTE) @ApiOperation(value = "save people", response = PeopleResponse.class)
     public ResponseEntity<JSONObject> save(@Valid @RequestBody PeopleDto dto) {
 
         People people = service.save(dto);
@@ -35,7 +44,7 @@ public class PeopleResource {
         return ok(success(PeopleResponse.from(people), "People save success!").getJson());
     }
 
-    @PutMapping("/update") @ApiOperation(value = "update people", response = PeopleResponse.class)
+    @PutMapping(Routes.PEOPLE_BASE_ROUTE) @ApiOperation(value = "update people", response = PeopleResponse.class)
     public ResponseEntity<JSONObject> update(@Valid @RequestBody PeopleDto dto) {
 
         People people = service.update(dto);
@@ -43,17 +52,7 @@ public class PeopleResource {
         return ok(success(PeopleResponse.from(people), "People update success!").getJson());
     }
 
-    @PutMapping("/change-record-status")
-    @ApiOperation(value = "update people record status", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> changeRecordStatus(@RequestParam(value = "id") Long id,
-            @RequestParam(value = "status") RecordStatus status) {
-
-        People people = service.changeRecordStatus(id, status);
-
-        return ok(success(PeopleResponse.from(people), "Status change success!").getJson());
-    }
-
-    @GetMapping("/find/{id}")
+    @GetMapping(Routes.FIND_PEOPLE)
     @ApiOperation(value = "find people by id", response = PeopleResponse.class)
     public ResponseEntity<JSONObject> findById(@RequestParam(value = "id") Long id) {
 
@@ -62,7 +61,7 @@ public class PeopleResource {
         return ok(success(PeopleResponse.from(people), "get success!").getJson());
     }
 
-    @GetMapping("/getList")
+    @GetMapping(Routes.PEOPLE_LIST)
     @ApiOperation(value = "get people lists", response = PeopleResponse.class)
     public ResponseEntity<JSONObject> getList(@RequestParam Long id) {
 
@@ -72,15 +71,5 @@ public class PeopleResource {
         peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
 
         return ok(success(peoples, "get list success!").getJson());
-    }
-
-    @GetMapping("/getAll") @ApiOperation(value = "get all people", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> getAll(@RequestParam(value = "direction") String direction,
-            @RequestParam(value = "sortBy") String column) {
-
-        List<People> peoples = service.getAll(direction, column);
-        List<PeopleResponse> responses = peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
-
-        return ok(success(responses, "all people get success").getJson());
     }
 }

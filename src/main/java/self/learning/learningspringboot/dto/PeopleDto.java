@@ -4,6 +4,9 @@ import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import self.learning.learningspringboot.entity.People;
+import self.learning.learningspringboot.enums.RecordStatus;
+
+import static self.learning.learningspringboot.enums.RecordStatus.DRAFT;
 
 @Data
 @NoArgsConstructor
@@ -18,12 +21,16 @@ public class PeopleDto {
     @NotNull
     private String password;
 
+    @NotNull
+    private RecordStatus status = DRAFT;
+
     public People to() {
         People people = new People();
         people.setName(name);
         people.setEmail(email);
         people.setPhone(phone);
         people.setPassword(password);
+        people.setRecordStatus(status);
         return people;
     }
 
@@ -33,5 +40,6 @@ public class PeopleDto {
         people.setEmail(email);
         people.setPhone(phone);
         people.setPassword(password);
+        people.setRecordStatus(status);
     }
 }

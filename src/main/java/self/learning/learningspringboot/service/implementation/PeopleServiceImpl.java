@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import self.learning.learningspringboot.dto.PeopleDto;
 import self.learning.learningspringboot.entity.People;
-import self.learning.learningspringboot.enums.RecordStatus;
 import self.learning.learningspringboot.helper.PeopleHelper;
 import self.learning.learningspringboot.listParameter.PeopleListParameter;
 import self.learning.learningspringboot.repository.PeopleRepository;
@@ -34,14 +33,6 @@ public class PeopleServiceImpl implements PeopleService {
         People people = this.find(dto.getId());
         dto.update(people);
         helper.updateBaseData(people, DRAFT);
-        people = repository.save(people);
-        return people;
-    }
-
-    @Override
-    public People changeRecordStatus(Long id, RecordStatus status) {
-        People people = this.find(id);
-        helper.updateBaseData(people, status);
         people = repository.save(people);
         return people;
     }
