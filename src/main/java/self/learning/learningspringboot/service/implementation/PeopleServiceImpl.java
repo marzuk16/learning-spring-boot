@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import self.learning.learningspringboot.dto.PeopleDto;
 import self.learning.learningspringboot.entity.People;
 import self.learning.learningspringboot.enums.RecordStatus;
+import self.learning.learningspringboot.helper.PeopleHelper;
+import self.learning.learningspringboot.listParameter.PeopleListParameter;
 import self.learning.learningspringboot.repository.PeopleRepository;
+import self.learning.learningspringboot.service.PeopleService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,8 +17,9 @@ import static self.learning.learningspringboot.enums.RecordStatus.DRAFT;
 
 @Service
 @RequiredArgsConstructor
-public class PeopleService implements PeopleService {
+public class PeopleServiceImpl implements PeopleService {
 
+    private final PeopleHelper helper;
     private final PeopleRepository repository;
     @Override
     public People save(PeopleDto dto) {

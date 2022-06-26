@@ -1,4 +1,4 @@
-package self.learning.learningspringboot.entity;
+package self.learning.learningspringboot.enums;
 
 public enum ModuleName {
     TEST

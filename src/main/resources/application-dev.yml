@@ -12,17 +12,17 @@ server:
 spring:
   # Database Configuration
   datasource:
-    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=LEARNING_SPRING_BOOT
-    username: SA
+    url: jdbc:mysql://localhost:3306/LEARNING_SPRING_BOOT?useUnicode=true&characterEncoding=UTF-8
+    username: root
     password: Root12!@
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    driver-class-name: com.mysql.jdbc.Driver
 
   # JPA Configuration
   jpa:
     # Properties
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         naming:
           implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
           physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
