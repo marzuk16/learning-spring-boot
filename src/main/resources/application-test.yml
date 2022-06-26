@@ -1,0 +1,10 @@
+# For testing stage environments
+
+# server config
+server:
+  port: 8003
+  error:
+    include-stacktrace: always
+  compression:
+    enabled: true
+  address: 0.0.0.0
