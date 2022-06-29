@@ -12,7 +12,8 @@ server:
 spring:
   # Database Configuration
   datasource:
-    url: jdbc:mysql://localhost:3306/LEARNING_SPRING_BOOT?useUnicode=true&characterEncoding=UTF-8
+#    url: jdbc:mysql://localhost:3306/LEARNING_SPRING_BOOT
+    url: ${MYSQL_SERVER}
     username: root
     password: Root12!@
     driver-class-name: com.mysql.jdbc.Driver
