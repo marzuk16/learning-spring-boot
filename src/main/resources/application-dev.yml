@@ -13,10 +13,11 @@ spring:
   # Database Configuration
   datasource:
 #    url: jdbc:mysql://localhost:3306/LEARNING_SPRING_BOOT
+#    url: jdbc:mysql://${DB_SERVER:localhost}:${DB_PORT:3306}/${DB_NAME}
     url: ${MYSQL_SERVER}
-    username: root
-    password: Root12!@
-    driver-class-name: com.mysql.jdbc.Driver
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:Root12!@}
+    driver-class-name: ${DB_DRIVER_CLASS_NAME:com.mysql.jdbc.Driver}
 
   # JPA Configuration
   jpa:
