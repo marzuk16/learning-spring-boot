@@ -63,9 +63,7 @@ public class PeopleResource {
 
     @GetMapping(Routes.PEOPLE_LIST)
     @ApiOperation(value = "get people lists", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> getList(@RequestParam Long id) {
-
-        PeopleListParameter parameter = new PeopleListParameter();
+    public ResponseEntity<JSONObject> getList(@RequestParam(value = "parameter", required = false) PeopleListParameter parameter) {
 
         List<People> peoples = service.getList(parameter);
         peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
