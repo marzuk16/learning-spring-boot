@@ -1,0 +1,36 @@
+version: '3.2'
+services:
+  learning-springboot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: learning-springboot.jar
+    image: marzuk16/learning-springboot:${VERSION:-latest}
+    ports:
+      - 8001:8001
+      - 8002:8002
+#    networks:
+#      - servicenet
+#      - redisnet
+#    volumes:
+#      -  type: bind
+#         source: ./.secrets
+#         target: /.secrets
+    environment:
+      - MYSQL_SERVER=jdbc:mysql://host.docker.internal:3306/LEARNING_SPRING_BOOT
+      - MYSQL_USERNAME=docker
+#      - spring.profiles.active=${ACTIVE_PROFILES}
+      - TZ=Asia/Dhaka
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+#    depends_on:
+#      - redis
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+        reservations:
+          memory: 200M
+#networks:
+#  servicenet: null
