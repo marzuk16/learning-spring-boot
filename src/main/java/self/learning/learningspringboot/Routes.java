@@ -3,6 +3,7 @@ package self.learning.learningspringboot;
 public class Routes {
 
     public final static String API_VERSION = "api/v1";
+    public final static String TOKEN = "/token";
     private final static String ID = "/{id}";
     private final static String LIST = "/get-list";
 

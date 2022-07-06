@@ -5,13 +5,22 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import self.learning.learningspringboot.Routes;
 import self.learning.learningspringboot.dto.PeopleDto;
+import self.learning.learningspringboot.dto.JwtDto;
 import self.learning.learningspringboot.entity.People;
 import self.learning.learningspringboot.listParameter.PeopleListParameter;
 import self.learning.learningspringboot.response.PeopleResponse;
+import self.learning.learningspringboot.response.TokenResponse;
 import self.learning.learningspringboot.service.PeopleService;
+import self.learning.learningspringboot.service.implementation.CustomUserDetailsService;
+import self.learning.learningspringboot.utils.JwtUtils;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,6 +35,9 @@ import static self.learning.learningspringboot.utils.response.ResponseBuilder.su
 @Api(tags = "people's data")
 public class PeopleResource {
     private final PeopleService service;
+    private final JwtUtils jwtUtils;
+    private final AuthenticationManager authenticationManager;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @GetMapping(Routes.PEOPLE_BASE_ROUTE) @ApiOperation(value = "get all people", response = PeopleResponse.class)
     public ResponseEntity<JSONObject> getAll(@RequestParam(value = "direction") String direction,
@@ -69,5 +81,25 @@ public class PeopleResource {
         peoples.stream().map(PeopleResponse::from).collect(Collectors.toList());
 
         return ok(success(peoples, "get list success!").getJson());
+    }
+
+    @PostMapping(Routes.TOKEN)
+    @ApiOperation(value = "token generate", response = PeopleResponse.class)
+    public ResponseEntity<?> generateToken(@RequestBody JwtDto jwtDto) throws Exception{
+        String token = "";
+        try {
+            this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtDto.getUsername(), jwtDto.getPassword()));
+            
+        } catch (UsernameNotFoundException e) {
+            e.printStackTrace();
+            throw new Exception("Bad credentials!");
+        } catch (BadCredentialsException e){
+            e.printStackTrace();
+            throw new Exception("Bad credentials!");
+        }
+
+        UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(jwtDto.getUsername());
+        token = this.jwtUtils.generateToken(userDetails);
+        return ResponseEntity.ok(TokenResponse.response(token));
     }
 }
