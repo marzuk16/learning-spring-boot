@@ -20,7 +20,7 @@ services:
     environment:
       - MYSQL_SERVER=jdbc:mysql://host.docker.internal:3306/LEARNING_SPRING_BOOT
       - MYSQL_USERNAME=docker
-#      - spring.profiles.active=${ACTIVE_PROFILES}
+      - spring.profiles.active=${ACTIVE_PROFILES:-dev}
       - TZ=Asia/Dhaka
     extra_hosts:
       - "host.docker.internal:host-gateway"
