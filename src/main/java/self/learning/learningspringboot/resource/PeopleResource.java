@@ -27,7 +27,8 @@ import static self.learning.learningspringboot.utils.response.ResponseBuilder.su
 public class PeopleResource {
     private final PeopleService service;
 
-    @GetMapping(Routes.PEOPLE_BASE_ROUTE) @ApiOperation(value = "get all people", response = PeopleResponse.class)
+    @GetMapping(Routes.PEOPLE_BASE_ROUTE)
+    @ApiOperation(value = "get all people", response = PeopleResponse.class)
     public ResponseEntity<JSONObject> getAll(@RequestParam(value = "direction") String direction,
             @RequestParam(value = "sortBy") String column) {
 
@@ -54,7 +55,7 @@ public class PeopleResource {
 
     @GetMapping(Routes.FIND_PEOPLE)
     @ApiOperation(value = "find people by id", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> findById(@RequestParam(value = "id") Long id) {
+    public ResponseEntity<JSONObject> findById(@PathVariable(value = "id") Long id) {
 
         People people = service.find(id);
 

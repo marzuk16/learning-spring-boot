@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import self.learning.learningspringboot.dto.PeopleDto;
 import self.learning.learningspringboot.entity.People;
+import self.learning.learningspringboot.exception.ResourceNotFoundException;
 import self.learning.learningspringboot.helper.PeopleHelper;
 import self.learning.learningspringboot.listParameter.PeopleListParameter;
 import self.learning.learningspringboot.repository.PeopleRepository;
@@ -39,7 +40,7 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Override
     public People find(Long id) {
-        People people = repository.findById(id).orElseThrow();
+        People people = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("People not found by: " + id));
         return people;
     }
 
