@@ -7,6 +7,7 @@ services:
       args:
         JAR_FILE: learning-springboot.jar
     image: marzuk16/learning-springboot:${VERSION:-latest}
+    container_name: learning-springboot-app # comment this line if we want to scale
     ports:
       - 3000:8001
       - 8002:8002
@@ -18,19 +19,32 @@ services:
 #         source: ./.secrets
 #         target: /.secrets
     environment:
-      - MYSQL_SERVER=jdbc:mysql://host.docker.internal:3306/LEARNING_SPRING_BOOT
-      - MYSQL_USERNAME=docker
+#      - MYSQL_SERVER=jdbc:mysql://host.docker.internal:3306/LEARNING_SPRING_BOOT
+      - MYSQL_SERVER=jdbc:mysql://${MYSQL_HOST:-mysqldb}:3306/${DB_NAME:-TEST}
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=root
+      - DB_NAME=LEARNING_SPRING_BOOT
       - spring.profiles.active=${ACTIVE_PROFILES:-dev}
       - TZ=Asia/Dhaka
     extra_hosts:
       - "host.docker.internal:host-gateway"
-#    depends_on:
-#      - redis
+    depends_on:
+      - mysqldb
     deploy:
       resources:
         limits:
           memory: 300M
         reservations:
           memory: 200M
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+    volumes:
+      - ${MYSQL_STORAGE:-./mysql}:/var/lib/mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: LEARNING_SPRING_BOOT
+      MYSQL_ROOT_PASSWORD: root
 #networks:
 #  servicenet: null

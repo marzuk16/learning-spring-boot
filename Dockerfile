@@ -1,6 +1,6 @@
 FROM openjdk:11.0.9-jre-slim
 
-ARG JAR_FILE=learning-springboot.jar
+ARG JAR_FILE
 COPY target/${JAR_FILE} app.jar
 
 EXPOSE 8001
