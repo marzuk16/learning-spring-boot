@@ -20,7 +20,7 @@ services:
 #         target: /.secrets
     environment:
 #      - MYSQL_SERVER=jdbc:mysql://host.docker.internal:3306/LEARNING_SPRING_BOOT
-      - MYSQL_SERVER=jdbc:mysql://${MYSQL_HOST:-mysqldb}:3306/${DB_NAME:-TEST}
+      - MYSQL_SERVER=jdbc:mysql://${MYSQL_HOST:-mysqldb}:3306/${DB_NAME:-LEARNING_SPRING_BOOT}
       - MYSQL_USERNAME=root
       - MYSQL_PASSWORD=root
       - DB_NAME=LEARNING_SPRING_BOOT
@@ -46,5 +46,7 @@ services:
     environment:
       MYSQL_DATABASE: LEARNING_SPRING_BOOT
       MYSQL_ROOT_PASSWORD: root
+volumes:
+  mysql_Data:
 #networks:
 #  servicenet: null
