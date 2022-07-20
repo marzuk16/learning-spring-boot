@@ -11,9 +11,8 @@ services:
     ports:
       - 3000:8001
       - 8002:8002
-#    networks:
-#      - servicenet
-#      - redisnet
+    networks:
+      - learning_net
 #    volumes:
 #      -  type: bind
 #         source: ./.secrets
@@ -44,9 +43,11 @@ services:
       - type: bind
         source: ${MYSQL_STORAGE:-./mysql}
         target: /var/lib/mysql
+    networks:
+      - learning_net
     ports:
       - 3307:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
-#networks:
-#  servicenet: null
+networks:
+  learning_net: null
