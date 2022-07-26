@@ -41,7 +41,7 @@ services:
     container_name: mysqldb
     volumes:
       - type: bind
-        source: ${MYSQL_STORAGE:-./mysql}
+        source: ${MYSQL_STORAGE:-~/Desktop/mysql_storage}
         target: /var/lib/mysql
     networks:
       - learning_net
