@@ -2,6 +2,7 @@ package self.learning.learningspringboot.criteria;
 
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.util.ObjectUtils;
 import self.learning.learningspringboot.entity.People;
 import self.learning.learningspringboot.utils.EntityFieldCheck;
 
@@ -9,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.Map;
 
@@ -21,8 +23,19 @@ public class PeopleCriteria {
         criteriaQuery.select(root);
 
         //filtering
-//        criteriaQuery.add(Restrictions.like("anyColumn", filterParams.get("search").toString(), MatchMode.ANYWHERE));
+        if(!ObjectUtils.isEmpty(filterParams.get("search"))){
+            String searchText = "%"+filterParams.get("search").toString()+"%";
+            Predicate[] searchPredicates = root
+                    .getModel()
+                    .getDeclaredSingularAttributes()
+                    .stream()
+                    .filter(a -> a.getBindableJavaType().equals(String.class))
+                    .map(a -> builder.like(root.get(a.getName()), searchText))
+                    .toArray(Predicate[]::new);
 
+            Predicate searchPredicate = builder.or(searchPredicates);
+            criteriaQuery.where(searchPredicate);
+        }
         //sorting
         if(filterParams.get("direction").toString().equals("asc") && EntityFieldCheck.isFiledExist(People.class, filterParams.get("sortBy").toString()))
             criteriaQuery.orderBy(builder.asc(root.get(filterParams.get("sortBy").toString())));

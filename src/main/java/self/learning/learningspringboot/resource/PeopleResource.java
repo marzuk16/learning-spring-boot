@@ -16,7 +16,6 @@ import self.learning.learningspringboot.service.PeopleService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -37,12 +36,16 @@ public class PeopleResource {
 
     @GetMapping(Routes.PEOPLE_BASE_ROUTE)
     @ApiOperation(value = "get all people", response = PeopleResponse.class)
-    public ResponseEntity<JSONObject> getAll(@RequestParam(value = "direction", defaultValue = "asc") String direction,
-            @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
+    public ResponseEntity<JSONObject> getAll(
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            @RequestParam(value = "sortBy", defaultValue = "id") String sortBy,
+            @RequestParam(value = "search") String search
+    ) {
 
         Map<String, Object> filterParams = new HashMap<>();
         filterParams.put("direction", direction);
         filterParams.put("sortBy", sortBy);
+        filterParams.put("search", search);
         TypedQuery<People> query = PeopleCriteria.getPeoples(entityManager, filterParams);
         List<People> peoples = query.getResultList();
 
