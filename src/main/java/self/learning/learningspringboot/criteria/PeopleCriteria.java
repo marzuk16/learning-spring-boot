@@ -1,7 +1,5 @@
 package self.learning.learningspringboot.criteria;
 
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.util.ObjectUtils;
 import self.learning.learningspringboot.entity.People;
 import self.learning.learningspringboot.utils.EntityFieldCheck;

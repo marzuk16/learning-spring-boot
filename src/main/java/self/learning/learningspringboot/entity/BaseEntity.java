@@ -7,6 +7,7 @@ import self.learning.learningspringboot.enums.RecordStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -16,14 +17,14 @@ public class BaseEntity implements Serializable {
     private static final Long serialVersionUID = 1L;
 
     @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
+//    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATED_AT", updatable = false)
-    protected Date createdAt;
+    protected LocalDateTime createdAt;
 
     @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
+//    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "UPDATED_AT")
-    protected Date updatedAt;
+    protected LocalDateTime updatedAt;
 
     @Version
     @JsonIgnore
@@ -45,11 +46,11 @@ public class BaseEntity implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = new Date();
+        this.createdAt = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = new Date();
+        this.updatedAt = LocalDateTime.now();
     }
 }
