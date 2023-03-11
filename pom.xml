@@ -2,17 +2,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>self.learning</groupId>
+	<artifactId>learning-spring-boot</artifactId>
+	<version>0.0.1</version>
+	<packaging>pom</packaging>
+	<name>learning-spring-boot</name>
+	<description>learning-spring-boot</description>
+
+	<modules>
+		<module>infrastructure/database</module>
+		<module>lib/components</module>
+		<module>lib/rest-starter</module>
+		<module>lib/web-starter</module>
+		<module>packages/ops-web</module>
+		<!--		<module>lib/authorizer</module>-->
+<!--		<module>lib/rest-starter</module>-->
+<!--		<module>lib/web-starter</module>-->
+<!--		<module>lib/components</module>-->
+<!--		<module>packages/auth</module>-->
+	</modules>
+
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>self.learning</groupId>
-	<artifactId>learning-spring-boot</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>learning-spring-boot</name>
-	<description>learning-spring-boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -65,5 +81,23 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- Check Code Quality -->
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.1</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
 
 </project>

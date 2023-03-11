@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>self.learning</groupId>
+    <artifactId>database</artifactId>
+    <version>0.0.1</version>
+    <name>LEARNING-SPRING-BOOT :: Infrastructure :: Database</name>
+
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>11</java.version>
+        <sql.maven.plugin.version>1.5</sql.maven.plugin.version>
+        <dbunit.maven.plugin.version>1.0-beta-3</dbunit.maven.plugin.version>
+<!--        <ojdbc10.version>19.9.0.0</ojdbc10.version>-->
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>syncDb</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                        <version>${sql.maven.plugin.version}</version>
+
+                        <dependencies>
+                            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+                            <dependency>
+                                <groupId>mysql</groupId>
+                                <artifactId>mysql-connector-java</artifactId>
+                                <version>8.0.32</version>
+<!--                                <version>${ojdbc10.version}</version>-->
+                            </dependency>
+
+                        </dependencies>
+
+                        <configuration>
+                            <driver>oracle.jdbc.driver.OracleDriver</driver>
+                            <url>${env.DB_SERVER}</url>
+                            <username>${env.DB_USERNAME}</username>
+                            <password>${env.DB_PASSWORD}</password>
+                            <onError>continue</onError>
+                            <skip>${skipSqlExecution}</skip>
+                        </configuration>
+
+                        <executions>
+                            <execution>
+                                <id>db-sync-boilerplates</id>
+                                <phase>process-test-resources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <delimiter>/</delimiter>
+                                    <delimiterType>row</delimiterType>
+                                    <orderFile>ascending</orderFile>
+                                    <fileset>
+                                        <basedir>${basedir}</basedir>
+                                        <includes>
+                                            <include>scripts/boilerplates.sql</include>
+                                        </includes>
+                                    </fileset>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>db-sync-data</id>
+                                <phase>process-test-resources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <orderFile>ascending</orderFile>
+                                    <fileset>
+                                        <basedir>${basedir}</basedir>
+                                        <includes>
+                                            <include>scripts/*.sql</include>
+                                        </includes>
+                                        <excludes>
+                                            <exclude>scripts/boilerplates.sql</exclude>
+                                        </excludes>
+                                    </fileset>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
